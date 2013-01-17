@@ -6,14 +6,7 @@
 # for FutureGrid Resources and also for FG Users
 #
 
-CONTROLLER="IP Address"
-MYSQLPASS="DoNotMakeItEasyToGuess"
-FIXED_RANGE="192.168.200.0/24"
-NET_PREFIX="149.165.146"
-QPID_PASS=""DoNotMakeItEasyToGuess""
-export ADMIN_PASSWORD="DoNotMakeItEasyToGuess"
-export SERVICE_PASSWORD="DoNotMakeItEasyToGuess"
-export ENABLE_ENDPOINTS=1
+source setuprc
 
 HTTP_PROXY=$http_proxy
 unset http_proxy

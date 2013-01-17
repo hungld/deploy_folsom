@@ -6,14 +6,7 @@
 # for FutureGrid Resources and also for FG Users
 #
 
-CONTROLLER="IP Address"
-MYSQLPASS="DoNotMakeItEasyToGuess"
-FIXED_RANGE="192.168.200.0/24"
-NET_PREFIX="149.165.146"
-QPID_PASS=""DoNotMakeItEasyToGuess""
-export ADMIN_PASSWORD="DoNotMakeItEasyToGuess"
-export SERVICE_PASSWORD="DoNotMakeItEasyToGuess"
-export ENABLE_ENDPOINTS=1
+source setuprc
 
 HTTP_PROXY=$http_proxy
 unset http_proxy
@@ -120,9 +113,9 @@ dhcpbridge_flagfile=/etc/nova/nova.conf
 dhcpbridge=/usr/bin/nova-dhcpbridge
 firewall_driver=nova.virt.libvirt.firewall.IptablesFirewallDriver
 public_interface=eth1
-vlan_interface=eth0
+#vlan_interface=eth0
 flat_network_bridge=br101
-##flat_interface=eth0
+flat_interface=eth0
 fixed_range=$FIXED_RANGE
 
 # NOVNC

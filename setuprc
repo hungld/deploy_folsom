@@ -1,0 +1,10 @@
+# setuprc - configuration file for deploying OpenStack
+
+CONTROLLER="IP Address"
+MYSQLPASS="DoNotMakeItEasyToGuess"
+FIXED_RANGE="192.168.200.0/24"
+NET_PREFIX="10.200.11"
+QPID_PASS=""DoNotMakeItEasyToGuess""
+export ADMIN_PASSWORD="DoNotMakeItEasyToGuess"
+export SERVICE_PASSWORD="DoNotMakeItEasyToGuess"
+export ENABLE_ENDPOINTS=1
