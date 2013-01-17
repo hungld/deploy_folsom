@@ -162,14 +162,14 @@ CONF=/etc/nova/api-paste.ini
 /bin/sed \
 	-e 's/%SERVICE_TENANT_NAME%/service/' \
 	-e 's/%SERVICE_USER%/nova/' \
-	-e 's/%SERVICE_PASSWORD%/$MYSQLPASS/' \
+	-e "s/%SERVICE_PASSWORD%/$MYSQLPASS/" \
 	$CONF.orig > $CONF
 
 CONF=/etc/glance/glance-api.conf
 /bin/sed \
 	-e 's/%SERVICE_TENANT_NAME%/service/' \
 	-e 's/%SERVICE_USER%/glance/' \
-	-e 's/%SERVICE_PASSWORD%/$MYSQLPASS/' \
+	-e "s/%SERVICE_PASSWORD%/$MYSQLPASS/" \
 	-e "s/^sql_connection *=.*/sql_connection = mysql:\/\/openstack:$MYSQLPASS@$CONTROLLER\/glance/" \
 	-e 's/^#* *config_file *=.*/config_file = \/etc\/glance\/glance-api-paste.ini/' \
 	-e 's/^#*flavor *=.*/flavor=keystone/' \
@@ -179,7 +179,7 @@ CONF=/etc/glance/glance-registry.conf
 /bin/sed \
 	-e 's/%SERVICE_TENANT_NAME%/service/' \
 	-e 's/%SERVICE_USER%/glance/' \
-	-e 's/%SERVICE_PASSWORD%/$MYSQLPASS/' \
+	-e "s/%SERVICE_PASSWORD%/$MYSQLPASS/" \
 	-e "s/^sql_connection *=.*/sql_connection = mysql:\/\/openstack:$MYSQLPASS@$CONTROLLER\/glance/" \
 	-e 's/^#* *config_file *=.*/config_file = \/etc\/glance\/glance-registry-paste.ini/' \
 	-e 's/^#*flavor *=.*/flavor=keystone/' \
@@ -188,7 +188,7 @@ CONF=/etc/glance/glance-registry.conf
 CONF=/etc/keystone/keystone.conf
 /bin/sed \
 	-e "s/^#*connection *=.*/connection = mysql:\/\/openstack:$MYSQLPASS@$CONTROLLER\/keystone/" \
-	-e 's/^#* *admin_token *=.*/admin_token = $MYSQLPASS/' \
+	-e "s/^#* *admin_token *=.*/admin_token = $MYSQLPASS/" \
 	$CONF.orig > $CONF
 
 for i in nova keystone glance
