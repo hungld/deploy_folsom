@@ -134,9 +134,9 @@ force_dhcp_release=True
 dhcpbridge_flagfile=/etc/nova/nova.conf
 dhcpbridge=/usr/bin/nova-dhcpbridge
 firewall_driver=nova.virt.libvirt.firewall.IptablesFirewallDriver
-public_interface=br100
+public_interface=eth1
 vlan_interface=eth0
-flat_network_bridge=br100
+flat_network_bridge=br101
 ##flat_interface=eth0
 fixed_range=$FIXED_RANGE
 
