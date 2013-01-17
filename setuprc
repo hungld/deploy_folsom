@@ -1,0 +1,3 @@
+# setuprc - config file for setup.sh
+
+CONTROLLER=$(cat /etc/hostname)
