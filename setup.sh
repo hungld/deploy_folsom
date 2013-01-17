@@ -6,7 +6,14 @@
 # for FutureGrid Resources and also for FG Users
 #
 
-source setuprc
+CONTROLLER="IP Address"
+MYSQLPASS="DoNotMakeItEasyToGuess"
+FIXED_RANGE="192.168.200.0/24"
+NET_PREFIX="149.165.146"
+QPID_PASS=""DoNotMakeItEasyToGuess""
+export ADMIN_PASSWORD="DoNotMakeItEasyToGuess"
+export SERVICE_PASSWORD="DoNotMakeItEasyToGuess"
+export ENABLE_ENDPOINTS=1
 
 HTTP_PROXY=$http_proxy
 unset http_proxy
@@ -106,13 +113,13 @@ api_paste_config=/etc/nova/api-paste.ini
 enabled_apis=ec2,osapi_compute,metadata
 
 # DB
-sql_connection=mysql://openstack:openstack@$CONTROLLER/nova
+sql_connection=mysql://openstack:$MYSQLPASS@$CONTROLLER/nova
 
 # AMQP
 rpc_backend=nova.openstack.common.rpc.impl_qpid
 qpid_hostname=$CONTROLLER
 qpid_username=nova@nova
-qpid_password=nova
+qpid_password=$QPID_PASS
 
 # KEYSTONE
 auth_strategy=keystone
@@ -131,7 +138,7 @@ public_interface=br100
 vlan_interface=eth0
 flat_network_bridge=br100
 ##flat_interface=eth0
-fixed_range=192.168.200.0/24
+fixed_range=$FIXED_RANGE
 
 # NOVNC
 novncproxy_base_url=http://\$my_ip:6080/vnc_auto.html
@@ -155,15 +162,15 @@ CONF=/etc/nova/api-paste.ini
 /bin/sed \
 	-e 's/%SERVICE_TENANT_NAME%/service/' \
 	-e 's/%SERVICE_USER%/nova/' \
-	-e 's/%SERVICE_PASSWORD%/openstack/' \
+	-e 's/%SERVICE_PASSWORD%/$MYSQLPASS/' \
 	$CONF.orig > $CONF
 
 CONF=/etc/glance/glance-api.conf
 /bin/sed \
 	-e 's/%SERVICE_TENANT_NAME%/service/' \
 	-e 's/%SERVICE_USER%/glance/' \
-	-e 's/%SERVICE_PASSWORD%/openstack/' \
-	-e "s/^sql_connection *=.*/sql_connection = mysql:\/\/openstack:openstack@$CONTROLLER\/glance/" \
+	-e 's/%SERVICE_PASSWORD%/$MYSQLPASS/' \
+	-e "s/^sql_connection *=.*/sql_connection = mysql:\/\/openstack:$MYSQLPASS@$CONTROLLER\/glance/" \
 	-e 's/^#* *config_file *=.*/config_file = \/etc\/glance\/glance-api-paste.ini/' \
 	-e 's/^#*flavor *=.*/flavor=keystone/' \
 	$CONF.orig > $CONF
@@ -172,16 +179,16 @@ CONF=/etc/glance/glance-registry.conf
 /bin/sed \
 	-e 's/%SERVICE_TENANT_NAME%/service/' \
 	-e 's/%SERVICE_USER%/glance/' \
-	-e 's/%SERVICE_PASSWORD%/openstack/' \
-	-e "s/^sql_connection *=.*/sql_connection = mysql:\/\/openstack:openstack@$CONTROLLER\/glance/" \
+	-e 's/%SERVICE_PASSWORD%/$MYSQLPASS/' \
+	-e "s/^sql_connection *=.*/sql_connection = mysql:\/\/openstack:$MYSQLPASS@$CONTROLLER\/glance/" \
 	-e 's/^#* *config_file *=.*/config_file = \/etc\/glance\/glance-registry-paste.ini/' \
 	-e 's/^#*flavor *=.*/flavor=keystone/' \
 	$CONF.orig > $CONF
 
 CONF=/etc/keystone/keystone.conf
 /bin/sed \
-	-e "s/^#*connection *=.*/connection = mysql:\/\/openstack:openstack@$CONTROLLER\/keystone/" \
-	-e 's/^#* *admin_token *=.*/admin_token = openstack/' \
+	-e "s/^#*connection *=.*/connection = mysql:\/\/openstack:$MYSQLPASS@$CONTROLLER\/keystone/" \
+	-e 's/^#* *admin_token *=.*/admin_token = $MYSQLPASS/' \
 	$CONF.orig > $CONF
 
 for i in nova keystone glance
@@ -200,7 +207,7 @@ test -f $PWDB.orig || /bin/mv $PWDB $PWDB.orig
 /bin/cp $PWDB.orig $PWDB
 /bin/chgrp qpidd $PWDB
 for i in nova glance cinder; do
-	echo $i | /usr/sbin/saslpasswd2 -c -p -f $PWDB -u $i $i
+	echo $QPID_PASS | /usr/sbin/saslpasswd2 -c -p -f $PWDB -u $i $i
 done
 
 ACL=/etc/qpid/qpidd.acl
@@ -247,18 +254,18 @@ CREATE DATABASE keystone;
 CREATE DATABASE glance;
 CREATE DATABASE nova;
 CREATE DATABASE cinder;
-GRANT ALL ON keystone.* TO 'openstack'@'localhost' IDENTIFIED BY 'openstack';
-GRANT ALL ON glance.*   TO 'openstack'@'localhost' IDENTIFIED BY 'openstack';
-GRANT ALL ON nova.*     TO 'openstack'@'localhost' IDENTIFIED BY 'openstack';
-GRANT ALL ON cinder.*   TO 'openstack'@'localhost' IDENTIFIED BY 'openstack';
-GRANT ALL ON keystone.* TO 'openstack'@'$CONTROLLER' IDENTIFIED BY 'openstack';
-GRANT ALL ON glance.*   TO 'openstack'@'$CONTROLLER' IDENTIFIED BY 'openstack';
-GRANT ALL ON nova.*     TO 'openstack'@'$CONTROLLER' IDENTIFIED BY 'openstack';
-GRANT ALL ON cinder.*   TO 'openstack'@'$CONTROLLER' IDENTIFIED BY 'openstack';
-GRANT ALL ON keystone.* TO 'openstack'@'%'         IDENTIFIED BY 'openstack';
-GRANT ALL ON glance.*   TO 'openstack'@'%'         IDENTIFIED BY 'openstack';
-GRANT ALL ON nova.*     TO 'openstack'@'%'         IDENTIFIED BY 'openstack';
-GRANT ALL ON cinder.*   TO 'openstack'@'%'         IDENTIFIED BY 'openstack';
+GRANT ALL ON keystone.* TO 'openstack'@'localhost' IDENTIFIED BY '$MYSQLPASS';
+GRANT ALL ON glance.*   TO 'openstack'@'localhost' IDENTIFIED BY '$MYSQLPASS';
+GRANT ALL ON nova.*     TO 'openstack'@'localhost' IDENTIFIED BY '$MYSQLPASS';
+GRANT ALL ON cinder.*   TO 'openstack'@'localhost' IDENTIFIED BY '$MYSQLPASS';
+GRANT ALL ON keystone.* TO 'openstack'@'$CONTROLLER' IDENTIFIED BY '$MYSQLPASS';
+GRANT ALL ON glance.*   TO 'openstack'@'$CONTROLLER' IDENTIFIED BY '$MYSQLPASS';
+GRANT ALL ON nova.*     TO 'openstack'@'$CONTROLLER' IDENTIFIED BY '$MYSQLPASS';
+GRANT ALL ON cinder.*   TO 'openstack'@'$CONTROLLER' IDENTIFIED BY '$MYSQLPASS';
+GRANT ALL ON keystone.* TO 'openstack'@'$NET_PREFIX.%'         IDENTIFIED BY '$MYSQLPASS';
+GRANT ALL ON glance.*   TO 'openstack'@'$NET_PREFIX.%'         IDENTIFIED BY '$MYSQLPASS';
+GRANT ALL ON nova.*     TO 'openstack'@'$NET_PREFIX.%'         IDENTIFIED BY '$MYSQLPASS';
+GRANT ALL ON cinder.*   TO 'openstack'@'$NET_PREFIX.%'         IDENTIFIED BY '$MYSQLPASS';
 EOF
 
 ##############################################################################
@@ -281,10 +288,6 @@ sleep 5
 ## Keystone 用サンプルデータ作成
 ##############################################################################
 
-export ADMIN_PASSWORD=admin
-export SERVICE_PASSWORD=openstack
-export ENABLE_ENDPOINTS=1
-
 /bin/sed -e "s/localhost/$CONTROLLER/g" /usr/share/keystone/sample_data.sh > /tmp/sample_data.sh
 /bin/bash -x /tmp/sample_data.sh
 
@@ -294,7 +297,7 @@ export ENABLE_ENDPOINTS=1
 
 /bin/cat << EOF > admin_credential
 export OS_USERNAME=admin
-export OS_PASSWORD=admin
+export OS_PASSWORD=$ADMIN_PASSWORD
 export OS_TENANT_NAME=demo
 export OS_AUTH_URL=http://$CONTROLLER:5000/v2.0
 export OS_NO_CACHE=1
@@ -302,7 +305,7 @@ EOF
 
 /bin/cat << EOF > demo_credential
 export OS_USERNAME=demo
-export OS_PASSWORD=admin
+export OS_PASSWORD=$ADMIN_PASSWORD
 export OS_TENANT_NAME=demo
 export OS_AUTH_URL=http://$CONTROLLER:5000/v2.0
 export OS_NO_CACHE=1
@@ -315,7 +318,7 @@ EOF
 /usr/bin/nova-manage network create \
 	--label private \
 	--num_networks=1 \
-	--fixed_range_v4=192.168.200.0/24 \
+	--fixed_range_v4=$FIXED_RANGE \
 	--network_size=256
 
 CONF=/etc/rc.local
@@ -362,7 +365,7 @@ source admin_credential
 ##############################################################################
 
 /usr/bin/nova keypair-add key1 > key1.pem
-/bin/chmod 440 key1.pem
+/bin/chmod 600 key1.pem
 /bin/chgrp adm key1.pem
 
 ##############################################################################
