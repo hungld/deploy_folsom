@@ -238,7 +238,7 @@ sleep 5
 ## Create MySQL accounts and databases of Nova, Glance, Keystone and Cinder
 ##############################################################################
 
-/bin/cat << EOF | /usr/bin/mysql -uroot
+/bin/cat << EOF | /usr/bin/mysql -uroot -p$MYSQLPASS
 DROP DATABASE IF EXISTS keystone;
 DROP DATABASE IF EXISTS glance;
 DROP DATABASE IF EXISTS nova;
