@@ -1,4 +1,4 @@
-Scripts for deploying OpenStack Folsom on Ubuntu-12.10
+Install-script of OpenStack Folsom on Ubuntu-12.10
 ======================================================
 
 This script is originally written by Akira Yoshiyama who met
