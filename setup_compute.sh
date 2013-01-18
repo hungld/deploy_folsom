@@ -69,6 +69,7 @@ EOF
 [DEFAULT]
 verbose=True
 debug=True
+multi_host=True
 
 # PATH
 logdir=/var/log/nova
