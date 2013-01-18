@@ -41,7 +41,7 @@ export DEBIAN_FRONTEND=noninteractive
 /bin/cat << EOF > openstack.sh
 #!/bin/bash
 
-NOVA="compute network scheduler cert consoleauth novncproxy api"
+NOVA="network scheduler cert consoleauth novncproxy api"
 GLANCE="registry api"
 KEYSTONE=""
 
@@ -137,7 +137,6 @@ fixed_range=$FIXED_RANGE
 novncproxy_base_url=http://\$my_ip:6080/vnc_auto.html
 vncserver_proxyclient_address=\$my_ip
 vncserver_listen=\$my_ip
-vnc_keymap=ja
 
 # Cinder
 ##volume_api_class=nova.volume.cinder.API

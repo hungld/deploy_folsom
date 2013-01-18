@@ -39,7 +39,6 @@ NOVA="compute network"
 
 case "\$1" in
 start|restart|status)
-	/sbin/\$1 keystone
 	for i in \$NOVA; do
 		/sbin/\$1 nova-\$i
 	done
@@ -48,7 +47,6 @@ stop)
 	for i in \$NOVA; do
 		/sbin/stop nova-\$i
 	done
-	/sbin/stop keystone
 	;;
 esac
 exit 0
