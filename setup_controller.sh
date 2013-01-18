@@ -12,7 +12,7 @@ HTTP_PROXY=$http_proxy
 unset http_proxy
 
 ##############################################################################
-## 必要なパッケージのインストール
+## Install necessary packages
 ##############################################################################
 
 export DEBIAN_FRONTEND=noninteractive
@@ -22,7 +22,6 @@ export DEBIAN_FRONTEND=noninteractive
 /usr/bin/aptitude -y install \
 	nova-api \
 	nova-cert \
-	nova-compute \
 	nova-network \
 	nova-scheduler \
 	keystone \
@@ -36,7 +35,7 @@ export DEBIAN_FRONTEND=noninteractive
 	linux-image-extra-virtual
 
 ##############################################################################
-## OpenStack サービス一括起動／停止スクリプト作成
+## Make a script to start/stop all services
 ##############################################################################
 
 /bin/cat << EOF > openstack.sh
@@ -71,13 +70,13 @@ EOF
 /bin/chmod +x openstack.sh
 
 ##############################################################################
-## OpenStack 全サービス停止
+## Stop all services.
 ##############################################################################
 
 ./openstack.sh stop
 
 ##############################################################################
-## Nova, Glance, Keystone の設定ファイル調整
+## Modify configuration files of Nova, Glance and Keystone
 ##############################################################################
 
 /bin/cat << EOF > /etc/nova/nova.conf
@@ -190,7 +189,7 @@ do
 done
 
 ##############################################################################
-## Nova, Glance, Cinder 用メッセージキューアカウント作成
+## Create accounts of Nova, Glance and Cinder on Message Queuing System
 ##############################################################################
 
 /usr/sbin/service qpidd stop
@@ -221,7 +220,7 @@ EOF
 /usr/sbin/service qpidd start
 
 ##############################################################################
-## MySQL ネットワーク設定変更
+## Modify MySQL configuration
 ##############################################################################
 
 /sbin/stop mysql
@@ -235,7 +234,7 @@ test -f $CONF.orig || /bin/cp $CONF $CONF.orig
 sleep 5
 
 ##############################################################################
-## Nova, Glance, Keystone, Cinder 用 DB・DB アカウント 作成
+## Create MySQL accounts and databases of Nova, Glance, Keystone and Cinder
 ##############################################################################
 
 /bin/cat << EOF | /usr/bin/mysql -uroot
@@ -262,7 +261,7 @@ GRANT ALL ON cinder.*   TO 'openstack'@'$NET_PREFIX.%'         IDENTIFIED BY '$M
 EOF
 
 ##############################################################################
-## Nova, Glance, Keystone 用 DB 初期化
+## Initialize databases of Nova, Glance and Keystone
 ##############################################################################
 
 /usr/bin/keystone-manage db_sync
@@ -270,7 +269,7 @@ EOF
 /usr/bin/nova-manage db sync
 
 ##############################################################################
-## Keystone 起動
+## Start Keystone
 ##############################################################################
 
 /sbin/start keystone
@@ -278,14 +277,14 @@ sleep 5
 /sbin/status keystone
 
 ##############################################################################
-## Keystone 用サンプルデータ作成
+## Create a sample data on Keystone
 ##############################################################################
 
 /bin/sed -e "s/localhost/$CONTROLLER/g" /usr/share/keystone/sample_data.sh > /tmp/sample_data.sh
 /bin/bash -x /tmp/sample_data.sh
 
 ##############################################################################
-## クレデンシャルファイル作成
+## Create credentials
 ##############################################################################
 
 /bin/cat << EOF > admin_credential
@@ -305,7 +304,7 @@ export OS_NO_CACHE=1
 EOF
 
 ##############################################################################
-## Nova ネットワーク設定
+## Create a nova network
 ##############################################################################
 
 /usr/bin/nova-manage network create \
@@ -331,14 +330,14 @@ exit 0
 EOF
 
 ##############################################################################
-## OpenStack サービス群起動
+## Start all srevices
 ##############################################################################
 
 ./openstack.sh start
 sleep 5
 
 ##############################################################################
-## Glance に UEC イメージ登録
+## Register Ubuntu-12.10 image on Glance
 ##############################################################################
 
 http_proxy=$HTTP_PROXY /usr/bin/wget \
@@ -354,7 +353,7 @@ source admin_credential
 /bin/rm -f ubuntu-12.10-server-cloudimg-amd64-disk1.img
 
 ##############################################################################
-## Nova キーペア作成
+## Add a key pair
 ##############################################################################
 
 /usr/bin/nova keypair-add key1 > key1.pem
@@ -362,7 +361,7 @@ source admin_credential
 /bin/chgrp adm key1.pem
 
 ##############################################################################
-## OS 再起動
+## Reboot
 ##############################################################################
 
 /sbin/reboot

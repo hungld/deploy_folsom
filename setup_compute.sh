@@ -1,9 +1,9 @@
 #!/bin/bash -xe
-#
+# setup_compute.sh - Installs OpenStack compute node.
 # Author: Akira Yoshiyama
 # 
 # Modfied by Koji Tanaka for adjusting parameters 
-# for FutureGrid Resources and also for FG Users
+# for FutureGrid Resources.
 #
 
 source setuprc
@@ -128,13 +128,13 @@ vnc_keymap=ja
 ##volume_api_class=nova.volume.cinder.API
 EOF
 
-CONF=/etc/nova/api-paste.ini
-test -f $CONF || /bin/cp $CONF ${CONF}.orig
-/bin/sed \
-	-e 's/%SERVICE_TENANT_NAME%/service/' \
-	-e 's/%SERVICE_USER%/nova/' \
-	-e "s/%SERVICE_PASSWORD%/$MYSQLPASS/" \
-	$CONF.orig > $CONF
+#CONF=/etc/nova/api-paste.ini
+#test -f $CONF || /bin/cp $CONF ${CONF}.orig
+#/bin/sed \
+#	-e 's/%SERVICE_TENANT_NAME%/service/' \
+#	-e 's/%SERVICE_USER%/nova/' \
+#	-e "s/%SERVICE_PASSWORD%/$MYSQLPASS/" \
+#	$CONF.orig > $CONF
 
 chown -R nova /etc/nova
 
