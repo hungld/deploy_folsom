@@ -6,11 +6,12 @@ several people who wanted to try OpenStack and don't have time to
 study OpenStack. Those people have the same questions, "where should I begin?"
 "What is the easiest way to try?" And the general answer is, "try devstack!" 
 
-However, devstack is for developers not for absolutely-beginners.
-So here's the script for absolutely-beginners of OpenStack.
+However, devstack is made for developers, not for absolutely-beginners.
+So here's the script for absolutely-beginners. The script builds OpenStack
+Folsom with FlatDHCP Mode and reboot the machine at the end.
 
 Update
 ======
 * Changed the static passwords nova/openstack to valiables, so that user can set it.
-* Make it able to build multiple nodes. Scripts are splitted into all_in_one, controller
+* Made it able to build multiple nodes. The script are splitted into all_in_one, controller
 and compute.
