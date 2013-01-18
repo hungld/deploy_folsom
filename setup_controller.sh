@@ -223,6 +223,7 @@ EOF
 ## Modify MySQL configuration
 ##############################################################################
 
+mysqladmin -u root password $MYSQLPASS
 /sbin/stop mysql
 
 CONF=/etc/mysql/my.cnf
