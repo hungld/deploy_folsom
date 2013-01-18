@@ -255,10 +255,10 @@ GRANT ALL ON keystone.* TO 'openstack'@'$CONTROLLER' IDENTIFIED BY '$MYSQLPASS';
 GRANT ALL ON glance.*   TO 'openstack'@'$CONTROLLER' IDENTIFIED BY '$MYSQLPASS';
 GRANT ALL ON nova.*     TO 'openstack'@'$CONTROLLER' IDENTIFIED BY '$MYSQLPASS';
 GRANT ALL ON cinder.*   TO 'openstack'@'$CONTROLLER' IDENTIFIED BY '$MYSQLPASS';
-GRANT ALL ON keystone.* TO 'openstack'@'$NET_PREFIX.%'         IDENTIFIED BY '$MYSQLPASS';
-GRANT ALL ON glance.*   TO 'openstack'@'$NET_PREFIX.%'         IDENTIFIED BY '$MYSQLPASS';
-GRANT ALL ON nova.*     TO 'openstack'@'$NET_PREFIX.%'         IDENTIFIED BY '$MYSQLPASS';
-GRANT ALL ON cinder.*   TO 'openstack'@'$NET_PREFIX.%'         IDENTIFIED BY '$MYSQLPASS';
+GRANT ALL ON keystone.* TO 'openstack'@'$MYSQL_ACCESS'         IDENTIFIED BY '$MYSQLPASS';
+GRANT ALL ON glance.*   TO 'openstack'@'$MYSQL_ACCESS'         IDENTIFIED BY '$MYSQLPASS';
+GRANT ALL ON nova.*     TO 'openstack'@'$MYSQL_ACCESS'         IDENTIFIED BY '$MYSQLPASS';
+GRANT ALL ON cinder.*   TO 'openstack'@'$MYSQL_ACCESS'         IDENTIFIED BY '$MYSQLPASS';
 EOF
 
 ##############################################################################
