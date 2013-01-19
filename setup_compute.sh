@@ -23,9 +23,6 @@ export DEBIAN_FRONTEND=noninteractive
     ntp \
     python-mysqldb \
     python-memcache \
-    rabbitmq-server \
-    mysql-server \
-    memcached \
     open-iscsi \
     open-iscsi-utils \
     kvm \
@@ -72,17 +69,11 @@ EOF
 /bin/chmod +x openstack.sh
 
 ##############################################################################
-## Stop all services.
-##############################################################################
-
-./openstack.sh stop
-
-##############################################################################
 ## Modify configuration files of Nova, Glance and Keystone
 ##############################################################################
 
 for i in /etc/nova/nova.conf \
-         /etc/nova/api-paste.ini \
+         /etc/nova/api-paste.ini
 do
 	test -f $i.orig || /bin/cp $i $i.orig
 done
