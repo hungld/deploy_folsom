@@ -10,10 +10,10 @@ This script installs OpenStack Folsom on Ubuntu-12.10
 How to
 ------
 Download.
-'''
+```
 git clone https://github.com/kjtanaka/deploy_folsom.git
 cd deploy_folsom
-'''
+```
 
 Create setuprc:
 '''
