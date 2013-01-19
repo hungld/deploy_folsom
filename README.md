@@ -16,14 +16,14 @@ cd deploy_folsom
 ```
 
 Create setuprc:
-'''
+```
 cp setuprc-example setuprc
-'''
+```
 
-Modify setuprc
-'''
+Modify setuprc:
+```
 a
-'''
+```
 
 History
 --------------------------
