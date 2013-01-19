@@ -37,14 +37,31 @@ PUBLIC_INTERFACE="br101"
 FLAT_INTERFACE="eth0"
 ```
 
-For controller node:
+For controller node.
 ```
 bash -ex setup_controller.sh
 ```
-For nova-compute node:
+The node will reboot after the installation. You can run
+your first instance(VM) by this.
+```
+. admin_credential
+nova boot --image ubuntu-12.10 --flavor 1 --key-name key1 vm001
+```
+You can check the status with this command.
+```
+nova list
+```
+Once your instance become ACTIVE, you can login to it.
+```
+ssh -i key1.pem ubuntu@192.168.201.2
+```
+
+For nova-compute node, use the same setuprc but run setup_compute.sh
+like this.
 ```
 bash -ex setup_compute.sh
 ```
+
 
 History
 --------------------------
