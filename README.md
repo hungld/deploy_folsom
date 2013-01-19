@@ -1,4 +1,4 @@
-Install-script of OpenStack Folsom on Ubuntu-12.10
+Install-script of OpenStack Folsom for Ubuntu-12.10
 ======================================================
 
 This script installs OpenStack Folsom on Ubuntu-12.10
