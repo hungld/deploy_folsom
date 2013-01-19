@@ -429,6 +429,7 @@ EOF
 	--num_networks=1 \
 	--fixed_range_v4=$FIXED_RANGE \
 	--network_size=256
+    --multi_host=T
 
 CONF=/etc/rc.local
 test -f $CONF.orig || cp $CONF $CONF.orig
@@ -451,6 +452,7 @@ EOF
 ##############################################################################
 
 ./openstack.sh start
+service apache2 restart
 sleep 5
 
 ##############################################################################
