@@ -1,19 +1,34 @@
 Install-script of OpenStack Folsom on Ubuntu-12.10
 ======================================================
 
-This script is originally written by Akira Yoshiyama who met
-several people who wanted to try OpenStack and don't have time to
-study OpenStack. Those people have the same questions, "where should I begin?"
-"What is the easiest way to try?" And the general answer is, "why don't you 
-try devstack?"
+This script installs OpenStack Folsom on Ubuntu-12.10
 
-However, devstack is made for developers, not for absolutely-beginners.
-So here's the script for absolutely-beginners. The script builds OpenStack
-Folsom on Ubuntu-12.10, with FlatDHCP Manager. The machine will be rebooted
-at the end of the installation.
+* setuprc - is configuration file
+* setup_controller.sh - Installs Keystone, Glance, Cinder and Nova.
+* setup_compute - Installs nova-compute and nova-network.
 
-Update
---------------
-* Changed the static passwords nova/openstack to valiables, so that user can set it.
-* Made it able to build multiple nodes. The script are splitted into all_in_one, controller
-and compute.
+How to
+------
+Download.
+'''
+git clone https://github.com/kjtanaka/deploy_folsom.git
+cd deploy_folsom
+'''
+
+Create setuprc:
+'''
+cp setuprc-example setuprc
+'''
+
+Modify setuprc
+'''
+a
+'''
+
+History
+--------------------------
+* Originally written by Akira Yoshiyama as a single node installation
+for beginers to try Folsom version.
+* Added Cinder configuration.
+* Changed messaging system from QPID to RabbitMQ.
+* Added a script for setup separate nova-compute node.
