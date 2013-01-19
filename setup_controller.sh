@@ -162,7 +162,6 @@ use_ipv6=false
 # VNC
 vncserver_proxyclient_address=\$my_ip
 vncserver_listen=\$my_ip
-vnc_keymap=en
 
 #scheduler
 scheduler_driver=nova.scheduler.filter_scheduler.FilterScheduler
@@ -394,6 +393,7 @@ EOF
 ## Add Cinder on Keystone
 ##############################################################################
 
+source admin_credential
 keystone endpoint-delete $(keystone endpoint-list | grep 8776 | awk '{print $2}')
 keystone service-delete $(keystone service-list | grep volume | awk '{print $2}')
 SERVICE_PASSWORD=$ADMIN_PASSWORD
