@@ -69,4 +69,4 @@ History
 as a single node installation for beginers to try Folsom.
 * I(Koji Tanaka) modified and added Cinder configuration.
 * Changed the messaging system from QPID to RabbitMQ.
-* Added the script for setup separate nova-compute node.
+* Added the script to install a separate nova-compute node.
