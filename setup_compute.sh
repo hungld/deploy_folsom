@@ -126,13 +126,13 @@ vnc_keymap=ja
 ##volume_api_class=nova.volume.cinder.API
 EOF
 
-#CONF=/etc/nova/api-paste.ini
-#test -f $CONF || /bin/cp $CONF ${CONF}.orig
-#/bin/sed \
-#	-e 's/%SERVICE_TENANT_NAME%/service/' \
-#	-e 's/%SERVICE_USER%/nova/' \
-#	-e "s/%SERVICE_PASSWORD%/$MYSQLPASS/" \
-#	$CONF.orig > $CONF
+CONF=/etc/nova/api-paste.ini
+/bin/sed \
+    -e "s/127.0.0.1/$CONTROLLER/" \
+    -e 's/%SERVICE_TENANT_NAME%/service/' \
+    -e 's/%SERVICE_USER%/nova/' \
+    -e "s/%SERVICE_PASSWORD%/$MYSQLPASS/" \
+    $CONF.orig > $CONF
 
 chown -R nova /etc/nova
 

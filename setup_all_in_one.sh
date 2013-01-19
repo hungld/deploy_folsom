@@ -2,8 +2,8 @@
 #
 # Author: Akira Yoshiyama
 # 
-# Parameters are modfied by Koji Tanaka for adjusting scripts 
-# to the computing resources in FutureGrid.
+# Modfied by Koji Tanaka for adjusting parameters 
+# for FutureGrid Resources and also for FG Users
 #
 
 source setuprc
@@ -22,8 +22,8 @@ export DEBIAN_FRONTEND=noninteractive
 /usr/bin/aptitude -y install \
 	nova-api \
 	nova-cert \
-	nova-compute \
 	nova-network \
+	nova-compute \
 	nova-scheduler \
 	keystone \
 	glance \
@@ -42,7 +42,7 @@ export DEBIAN_FRONTEND=noninteractive
 /bin/cat << EOF > openstack.sh
 #!/bin/bash
 
-NOVA="compute network scheduler cert consoleauth novncproxy api"
+NOVA="network scheduler cert consoleauth novncproxy api"
 GLANCE="registry api"
 KEYSTONE=""
 
@@ -84,6 +84,7 @@ EOF
 [DEFAULT]
 verbose=True
 debug=True
+multi_host=True
 
 # PATH
 logdir=/var/log/nova
@@ -127,17 +128,15 @@ force_dhcp_release=True
 dhcpbridge_flagfile=/etc/nova/nova.conf
 dhcpbridge=/usr/bin/nova-dhcpbridge
 firewall_driver=nova.virt.libvirt.firewall.IptablesFirewallDriver
-public_interface=eth1
-vlan_interface=eth0
+public_interface=$PUBLIC_INTERFACE
 flat_network_bridge=br101
-##flat_interface=eth0
+flat_interface=$FLAT_INTERFACE
 fixed_range=$FIXED_RANGE
 
 # NOVNC
 novncproxy_base_url=http://\$my_ip:6080/vnc_auto.html
 vncserver_proxyclient_address=\$my_ip
 vncserver_listen=\$my_ip
-vnc_keymap=ja
 
 # Cinder
 ##volume_api_class=nova.volume.cinder.API
@@ -256,10 +255,10 @@ GRANT ALL ON keystone.* TO 'openstack'@'$CONTROLLER' IDENTIFIED BY '$MYSQLPASS';
 GRANT ALL ON glance.*   TO 'openstack'@'$CONTROLLER' IDENTIFIED BY '$MYSQLPASS';
 GRANT ALL ON nova.*     TO 'openstack'@'$CONTROLLER' IDENTIFIED BY '$MYSQLPASS';
 GRANT ALL ON cinder.*   TO 'openstack'@'$CONTROLLER' IDENTIFIED BY '$MYSQLPASS';
-GRANT ALL ON keystone.* TO 'openstack'@'$NET_PREFIX.%'         IDENTIFIED BY '$MYSQLPASS';
-GRANT ALL ON glance.*   TO 'openstack'@'$NET_PREFIX.%'         IDENTIFIED BY '$MYSQLPASS';
-GRANT ALL ON nova.*     TO 'openstack'@'$NET_PREFIX.%'         IDENTIFIED BY '$MYSQLPASS';
-GRANT ALL ON cinder.*   TO 'openstack'@'$NET_PREFIX.%'         IDENTIFIED BY '$MYSQLPASS';
+GRANT ALL ON keystone.* TO 'openstack'@'$MYSQL_ACCESS'         IDENTIFIED BY '$MYSQLPASS';
+GRANT ALL ON glance.*   TO 'openstack'@'$MYSQL_ACCESS'         IDENTIFIED BY '$MYSQLPASS';
+GRANT ALL ON nova.*     TO 'openstack'@'$MYSQL_ACCESS'         IDENTIFIED BY '$MYSQLPASS';
+GRANT ALL ON cinder.*   TO 'openstack'@'$MYSQL_ACCESS'         IDENTIFIED BY '$MYSQLPASS';
 EOF
 
 ##############################################################################

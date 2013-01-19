@@ -9,7 +9,7 @@ try devstack?"
 
 However, devstack is made for developers, not for absolutely-beginners.
 So here's the script for absolutely-beginners. The script builds OpenStack
-Folsom on Ubuntu-12.10, with FlatDHCP Mode. The machine will be rebooted
+Folsom on Ubuntu-12.10, with FlatDHCP Manager. The machine will be rebooted
 at the end of the installation.
 
 Update
