@@ -74,7 +74,7 @@ service memcached restart
 /bin/cat << EOF > openstack.sh
 #!/bin/bash
 
-NOVA="network scheduler cert consoleauth novncproxy api"
+NOVA="compute network scheduler cert consoleauth novncproxy api"
 GLANCE="registry api"
 KEYSTONE=""
 
@@ -162,6 +162,7 @@ use_ipv6=false
 # VNC
 vncserver_proxyclient_address=\$my_ip
 vncserver_listen=\$my_ip
+keymap=en-us
 
 #scheduler
 scheduler_driver=nova.scheduler.filter_scheduler.FilterScheduler
