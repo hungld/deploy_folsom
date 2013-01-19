@@ -1,7 +1,7 @@
 Installation Script of OpenStack Folsom for Ubuntu-12.10
 ======================================================
 
-Test.This script installs OpenStack Folsom on Ubuntu-12.10
+This script installs OpenStack Folsom on Ubuntu-12.10
 
 * setuprc - is configuration file
 * setup_controller.sh - Installs Keystone, Glance, Cinder and Nova.
