@@ -56,7 +56,7 @@ Once your instance become ACTIVE, you can login to it.
 ssh -i key1.pem ubuntu@192.168.201.2
 ```
 
-For nova-compute node, use the same setuprc but run setup_compute.sh
+For nova-compute node, use the same setuprc and execute setup_compute.sh
 like this.
 ```
 bash -ex setup_compute.sh
