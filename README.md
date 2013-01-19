@@ -63,7 +63,7 @@ bash -ex setup_compute.sh
 ```
 
 
-History
+Log
 --------------------------
 * Originally written by Akira Yoshiyama, under Apache License,
 as a single node installation for beginers to try Folsom.
