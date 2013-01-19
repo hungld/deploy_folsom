@@ -41,8 +41,9 @@ For controller node.
 ```
 bash -ex setup_controller.sh
 ```
-The node will reboot after the installation. You can run
-your first instance(VM) by this.
+The node will reboot after the installation. The script installs nova-compute 
+on the controller, so you can run your first instance(VM) when the node finish reboot.
+The command is like this.
 ```
 . admin_credential
 nova boot --image ubuntu-12.10 --flavor 1 --key-name key1 vm001
@@ -62,6 +63,10 @@ like this.
 bash -ex setup_compute.sh
 ```
 
+If you want stop nova-compute on the controller, you can disable it by this.
+```
+nova-manage service disable --service nova-compute --host <hostname of your controller>
+```
 
 Log
 --------------------------
