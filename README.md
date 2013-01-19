@@ -65,8 +65,8 @@ bash -ex setup_compute.sh
 
 History
 --------------------------
-* Originally written by Akira Yoshiyama, under Apache License, 
-as a single node installation for beginers to try Folsom version.
-* Added Cinder configuration.
-* Changed messaging system from QPID to RabbitMQ.
-* Added a script for setup separate nova-compute node.
+* Originally written by Akira Yoshiyama, under Apache License,
+as a single node installation for beginers to try Folsom.
+* I(Koji Tanaka) modified and added Cinder configuration.
+* Changed the messaging system from QPID to RabbitMQ.
+* Added the script for setup separate nova-compute node.
