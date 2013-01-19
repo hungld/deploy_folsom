@@ -22,13 +22,34 @@ cp setuprc-example setuprc
 
 Modify setuprc:
 ```
-a
+# setuprc - configuration file for deploying OpenStack
+
+PASSWORD="DoNotMakeThisEasy"
+export ADMIN_PASSWORD=$PASSWORD
+export SERVICE_PASSWORD=$PASSWORD
+export ENABLE_ENDPOINTS=1
+MYSQLPASS=$PASSWORD
+QPID_PASS=$PASSWORD
+CONTROLLER="192.168.1.1"
+FIXED_RANGE="192.168.201.0/24"
+MYSQL_ACCESS="192.168.1.%"
+PUBLIC_INTERFACE="br101"
+FLAT_INTERFACE="eth0"
+```
+
+For controller node:
+```
+bash -ex setup_controller.sh
+```
+For nova-compute node:
+```
+bash -ex setup_compute.sh
 ```
 
 History
 --------------------------
-* Originally written by Akira Yoshiyama as a single node installation
-for beginers to try Folsom version.
+* Originally written by Akira Yoshiyama, under Apache License, 
+as a single node installation for beginers to try Folsom version.
 * Added Cinder configuration.
 * Changed messaging system from QPID to RabbitMQ.
 * Added a script for setup separate nova-compute node.
