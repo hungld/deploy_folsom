@@ -29,7 +29,7 @@ export ADMIN_PASSWORD=$PASSWORD
 export SERVICE_PASSWORD=$PASSWORD
 export ENABLE_ENDPOINTS=1
 MYSQLPASS=$PASSWORD
-QPID_PASS=$PASSWORD
+RABBIT_PASS=$PASSWORD
 CONTROLLER="192.168.1.1"
 FIXED_RANGE="192.168.201.0/24"
 MYSQL_ACCESS="192.168.1.%"
@@ -72,6 +72,7 @@ Log
 --------------------------
 * Originally written by Akira Yoshiyama, under Apache License,
 as a single node installation for beginers to try Folsom.
-* I(Koji Tanaka) modified and added Cinder configuration.
+* I(Koji Tanaka) modified it for making it work for multiple nodes, and 
+  added Cinder configuration.
 * Changed the messaging system from QPID to RabbitMQ.
 * Added the script to install a separate nova-compute node.

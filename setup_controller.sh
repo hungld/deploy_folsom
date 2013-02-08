@@ -483,7 +483,6 @@ source admin_credential
 
 /usr/bin/nova keypair-add key1 > key1.pem
 /bin/chmod 600 key1.pem
-/bin/chgrp adm key1.pem
 
 ##############################################################################
 ## Reboot
